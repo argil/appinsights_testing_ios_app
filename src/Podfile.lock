@@ -1,0 +1,10 @@
+PODS:
+  - ApplicationInsights (1.0-beta.7)
+
+DEPENDENCIES:
+  - ApplicationInsights (= 1.0-beta.7)
+
+SPEC CHECKSUMS:
+  ApplicationInsights: 55c7bc52fc1ebed1cc2837535126e93e26b95650
+
+COCOAPODS: 0.39.0
