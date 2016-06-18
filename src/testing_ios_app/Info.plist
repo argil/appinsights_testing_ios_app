@@ -26,6 +26,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>MSAIInstrumentationKey</key>
+	<string>b56810bf-6d26-4d49-a9fd-5853cb1f5956</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

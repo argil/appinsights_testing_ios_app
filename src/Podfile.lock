@@ -1,0 +1,20 @@
+PODS:
+  - ApplicationInsights (1.0-beta.7)
+  - CocoaLumberjack (2.3.0):
+    - CocoaLumberjack/Default (= 2.3.0)
+    - CocoaLumberjack/Extensions (= 2.3.0)
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.3.0):
+    - CocoaLumberjack/Default
+
+DEPENDENCIES:
+  - ApplicationInsights (= 1.0-beta.7)
+  - CocoaLumberjack
+
+SPEC CHECKSUMS:
+  ApplicationInsights: 55c7bc52fc1ebed1cc2837535126e93e26b95650
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
+
+COCOAPODS: 0.39.0
