@@ -1,2 +1,4 @@
+pod 'CocoaLumberjack'
+
 platform :ios, '8.0'
 pod "ApplicationInsights", '1.0-beta.7'
