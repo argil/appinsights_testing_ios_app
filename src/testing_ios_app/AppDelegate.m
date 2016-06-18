@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+@import ApplicationInsights;
+
 @interface AppDelegate ()
 
 @end
@@ -15,31 +17,45 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	[MSAIApplicationInsights setup];
+#if DEBUG
+	[[MSAIApplicationInsights sharedInstance] setDebugLogEnabled:YES];
+#endif // DEBUG
+	[MSAIApplicationInsights start];
 	return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationWillResignActive"];}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationDidEnterBackground"];
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationWillEnterForeground"];
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+	[MSAITelemetryManager trackEventWithName:@"Custom event"
+								  properties:@{@"Test property 1":@"Some test value",
+											   @"Test property 2":@"Some other test value"}
+								measurements:@{@"Test measurement 1":@(4.8),
+											   @"Test measurement 2":@(15.16),
+											   @"Test measurement 3":@(23.42)}];
+
+	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationDidBecomeActive"];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationWillTerminate"];
 }
 
 @end
