@@ -10,18 +10,38 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextView *m_textView;
+
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (void)receiveTestNotification:(NSNotification*)notification
+{
+	NSMutableString *mutableString = [NSMutableString stringWithFormat:@"%@", [[self m_textView] text]];
+	[mutableString appendString:[notification object]];
+	[[self m_textView] setText:mutableString];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveTestNotification:)
+												 name:kRemoteLog
+											   object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+#pragma unused(animated)
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didReceiveMemoryWarning
+{
 	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
 }
 
 @end

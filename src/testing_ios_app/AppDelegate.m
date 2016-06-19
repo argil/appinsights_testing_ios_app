@@ -16,13 +16,34 @@
 
 @implementation AppDelegate
 
+-(void)handleLog:(NSNotification*)notification
+{
+	NSFileHandle* pipeReadHandle = [notification object];
+	[pipeReadHandle readInBackgroundAndNotify] ;
+	NSString *log = [[NSString alloc] initWithData:[[notification userInfo] objectForKey: NSFileHandleNotificationDataItem]
+										  encoding: NSASCIIStringEncoding] ;
+
+	// Post notification with log string.
+	[[NSNotificationCenter defaultCenter] postNotificationName:kRemoteLog object:log];
+}
+
+- (void)redirectStderrToPipe
+{
+	NSPipe *pipe = [NSPipe pipe];
+	NSFileHandle* fileHandleForReading = [pipe fileHandleForReading];
+	dup2([[pipe fileHandleForWriting] fileDescriptor], fileno(stderr)) ;
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLog:)
+												 name:NSFileHandleReadCompletionNotification
+											   object:fileHandleForReading];
+	[fileHandleForReading readInBackgroundAndNotify];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	[self redirectStderrToPipe];
+
 	[MSAIApplicationInsights setup];
-#if DEBUG
 	[[MSAIApplicationInsights sharedInstance] setDebugLogEnabled:YES];
-#endif // DEBUG
 	[MSAIApplicationInsights start];
 	return YES;
 }
@@ -56,6 +77,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	[MSAITelemetryManager trackTraceWithMessage:@"Test applicationWillTerminate"];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
