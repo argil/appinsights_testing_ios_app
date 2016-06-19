@@ -3,7 +3,7 @@
 
 # Preview
 
-![Preview1](https://argil.github.io/msftappinsights_testing_ios_app/screenshot.png)
+![Preview1](https://argil.github.io/appinsights_testing_ios_app/screenshot.png)
 
 # Get telemetry reports
 
