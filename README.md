@@ -1,9 +1,13 @@
-# msftappinsights_testing_ios_app
-Testing the App Insights SDK
+# Testing the App Insights SDK
+```msftappinsights_testing_ios_app``` is a simple app I built to test out the [App Insights SDK](https://github.com/Microsoft/ApplicationInsights-iOS)
+
+# Preview
+
+![Preview1](https://argil.github.io/msftappinsights_testing_ios_app/screenshot.png)
 
 # Get telemetry reports
 
-Go to (https://portal.azure.com), select ```msftappinsights_testing_ios_app```, and then click ```Analytics```.
+Go to the [Azure Portal](https://portal.azure.com), select your app instance (in my case ```msftappinsights_testing_ios_app```), and then click ```Analytics```.
 
 To get the last messages sent from the app:
 ```script
